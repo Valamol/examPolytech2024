@@ -1,0 +1,62 @@
+services:
+  db:
+    image: mysql:8.0
+    restart: always
+    container_name: db
+    volumes:
+      - db:/var/lib/mysql
+    networks:
+      - network
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=superheroes
+      - MYSQL_USER=sa
+      - MYSQL_PASSWORD=admin
+    ports:
+      - 3306:3306
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 2
+  
+  backend:
+    build:
+      context: java/
+      dockerfile: Dockerfile
+    image: back
+    container_name: backend
+    depends_on:
+      db:           
+        condition: service_healthy
+        restart: true
+    environment: 
+      - spring.datasource.url=jdbc:mysql://db:3306/superheroes
+      - spring.datasource.username=root
+      - spring.datasource.password=root
+    ports:
+      - 8448:8448
+    networks:
+      - network
+    healthcheck:
+      test: curl http://localhost:8448/actuator/health
+      interval: 30s
+      timeout: 3s
+      retries: 3
+
+  frontend:
+    build:
+      context: angular/
+      dockerfile: Dockerfile
+    image: front
+    container_name: Frontend
+    environment:
+      - BACKEND_URL=http://localhost:8448
+    ports:
+      - 9999:80
+  
+volumes:
+  db:
+
+networks:
+  network:
