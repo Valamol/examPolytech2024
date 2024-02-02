@@ -1,0 +1,6 @@
+16) DOocker sert a créer des conteneurs qui permettent la virtualisation d'application. Cela permet une économie de temps et de ressource lors du déploiement et de la maintenance d'une application
+
+17) CI: Continuous integration: mise en place de test durant la prod afin de valider les fonctionnalités pour gagner du temps
+CD: continous deployement: automatisation du déploiement
+
+18) J'ai bien aier la pédagogie du cour, tout était clair. Le cour a permis de découvrir pas a pas chaque aspect de docker.
