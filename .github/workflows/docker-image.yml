@@ -37,7 +37,7 @@ jobs:
       uses: docker/build-push-action@v5
       with:
         context: .
-        file: Dockerfile.gha
+        file: angular/Dockerfile
         push: true
         tags: rg.fr-par.scw.cloud/exampolytech2024/angular:amaury
 
@@ -64,7 +64,7 @@ jobs:
       uses: docker/build-push-action@v5
       with:
         context: .
-        file: Dockerfile.gha
+        file: java/Dockerfile
         push: true
         tags: rg.fr-par.scw.cloud/exampolytech2024/java:amaury
 
